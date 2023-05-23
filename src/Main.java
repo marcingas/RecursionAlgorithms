@@ -26,13 +26,18 @@ public class Main {
         System.out.println(fibonacciElementCount(7));
         int[] arr = new int[]{3, 1, 2};
         List<Integer> list = new ArrayList<>();
-//        printAllSubseqenceArray(0, list, arr);
-//        printAllSubseqenceArrayReverse(0,list,arr);
+        printAllSubseqenceArray(0, list, arr);
+        printAllSubseqenceArrayReverse(0, list, arr);
         int[] array1 = new int[]{1, 2, 1};
         List<Integer> list1 = new ArrayList<Integer>();
         int expectedSum = 2;
         printOneSubseqenceArraySumN(0, list1, array1, expectedSum, 0);
-        System.out.println(printNumOfSubseqenceArraySumN(0,array1,2,0));
+        System.out.println(printNumOfSubseqenceArraySumN(0, array1, 2, 0));
+        int[]arr4 = new int[]{2,3,6,7};
+        List<List<Integer>>answer = new ArrayList<>();
+        List<Integer>list4 = new ArrayList<>();
+        System.out.println(allCombinations(arr4,7));
+
     }
 
     public static void count(int i, int n) {
@@ -101,7 +106,7 @@ public class Main {
     }
 
     public static void reverseArrayOneParam(int i, int[] array) {
-        if (i > array.length / 2) return;
+        if (i >= array.length / 2) return;
         swap(i, (array.length - 1 - i), array);
         reverseArrayOneParam(i + 1, array);
     }
@@ -127,15 +132,15 @@ public class Main {
 
     }
 
-    public static void printAllSubseqenceArray(int index, List<Integer> list, int[] arr) {
-        if (index == arr.length) {
+    public static void printAllSubseqenceArray(int ind, List<Integer> list, int[] arr) {
+        if (ind == arr.length) {
             System.out.println(list.toString());
             return;
         }
-        list.add(arr[index]);
-        printAllSubseqenceArray(index + 1, list, arr);
+        list.add(arr[ind]);
+        printAllSubseqenceArray(ind + 1, list, arr);
         list.remove(list.size() - 1);
-        printAllSubseqenceArray(index + 1, list, arr);
+        printAllSubseqenceArray(ind + 1, list, arr);
     }
 
     public static void printAllSubseqenceArrayReverse(int index, List<Integer> list, int[] arr) {
@@ -177,7 +182,7 @@ public class Main {
     }
 
     public static int printNumOfSubseqenceArraySumN(int index, int[] arr, int expectedSum, int currentSum) {
-        if(currentSum>expectedSum) return 0;
+        if (currentSum > expectedSum) return 0;
         if (index == arr.length) {
             if (currentSum == expectedSum) return 1;
             return 0;
@@ -189,5 +194,48 @@ public class Main {
 
         int countR = printNumOfSubseqenceArraySumN(index + 1, arr, expectedSum, currentSum);
         return countL + countR;
+    }
+
+    public static void findCombinations(int index, int[] arr, int target, List<List<Integer>> answer, List<Integer> list) {
+        if (index == arr.length) {
+            if (target == 0) {
+                answer.add(new ArrayList<>(list));
+
+            }
+            return;
+        }
+        if(arr[index]<=target){
+            list.add(arr[index]);
+            findCombinations(index,arr,target-arr[index],answer,list);
+            list.remove(list.size()-1);
+        }
+        findCombinations(index+1,arr,target,answer,list);
+
+
+    }
+    public static void findUniqeCombinationsOncePick(int index, int[] arr, int target, List<List<Integer>> answer, List<Integer> list) {
+        if (target==0) {
+            answer.add(new ArrayList<>(list));
+            return;
+        }
+        for(int i = index; i < arr.length; i++) {
+            if (i > index && arr[i] == arr[i - 1]) continue;
+            if (arr[i] > target) break;
+
+            list.add(arr[i]);
+            findUniqeCombinationsOncePick(i+1,arr,target-arr[i],answer,list);
+            list.remove(list.size()-1);
+        }
+    }
+    public static List<List<Integer>> allCombinations(int[]arr,int target){
+        List<List<Integer>> answer = new ArrayList<>();
+        findCombinations(0,arr,target,answer,new ArrayList<>());
+        return answer;
+    }
+    public static List<List<Integer>> allCombinationsUnique(int[]arr,int target){
+        List<List<Integer>> answer = new ArrayList<>();
+        Arrays.sort(arr);
+        findUniqeCombinationsOncePick(0,arr,target,answer,new ArrayList<>());
+        return answer;
     }
 }
