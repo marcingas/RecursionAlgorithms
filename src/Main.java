@@ -1,6 +1,4 @@
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 public class Main {
     public static void main(String[] args) {
@@ -33,10 +31,21 @@ public class Main {
         int expectedSum = 2;
         printOneSubseqenceArraySumN(0, list1, array1, expectedSum, 0);
         System.out.println(printNumOfSubseqenceArraySumN(0, array1, 2, 0));
-        int[]arr4 = new int[]{2,3,6,7};
-        List<List<Integer>>answer = new ArrayList<>();
-        List<Integer>list4 = new ArrayList<>();
-        System.out.println(allCombinations(arr4,7));
+        int[] arr4 = new int[]{2, 3, 6, 7};
+        List<List<Integer>> answer = new ArrayList<>();
+        List<Integer> list4 = new ArrayList<>();
+        System.out.println(allCombinations(arr4, 7));
+        int[] candidates = new int[]{3, 2, 1};
+        System.out.println(solutionPrinter(candidates));
+        int[] array2 = new int[]{1, 2, 2, 2, 3, 3};
+        System.out.println("solutions:");
+        Set<List<Integer>> setSolution = new HashSet<>();
+        List<Integer> list3 = new ArrayList<>();
+        uniqueAllSubsets(0, setSolution, list3, array2);
+        int[]nums = new int[]{1,2,2,2,3,3};
+        System.out.println("ans printer: ");
+        System.out.println(ansPrinter(nums));
+
 
     }
 
@@ -204,38 +213,92 @@ public class Main {
             }
             return;
         }
-        if(arr[index]<=target){
+        if (arr[index] <= target) {
             list.add(arr[index]);
-            findCombinations(index,arr,target-arr[index],answer,list);
-            list.remove(list.size()-1);
+            findCombinations(index, arr, target - arr[index], answer, list);
+            list.remove(list.size() - 1);
         }
-        findCombinations(index+1,arr,target,answer,list);
+        findCombinations(index + 1, arr, target, answer, list);
 
 
     }
+
     public static void findUniqeCombinationsOncePick(int index, int[] arr, int target, List<List<Integer>> answer, List<Integer> list) {
-        if (target==0) {
+        if (target == 0) {
             answer.add(new ArrayList<>(list));
             return;
         }
-        for(int i = index; i < arr.length; i++) {
+        for (int i = index; i < arr.length; i++) {
             if (i > index && arr[i] == arr[i - 1]) continue;
             if (arr[i] > target) break;
 
             list.add(arr[i]);
-            findUniqeCombinationsOncePick(i+1,arr,target-arr[i],answer,list);
+            findUniqeCombinationsOncePick(i + 1, arr, target - arr[i], answer, list);
+            list.remove(list.size() - 1);
+        }
+    }
+
+    public static List<List<Integer>> allCombinations(int[] arr, int target) {
+        List<List<Integer>> answer = new ArrayList<>();
+        findCombinations(0, arr, target, answer, new ArrayList<>());
+        return answer;
+    }
+
+    public static List<List<Integer>> allCombinationsUnique(int[] arr, int target) {
+        List<List<Integer>> answer = new ArrayList<>();
+        Arrays.sort(arr);
+        findUniqeCombinationsOncePick(0, arr, target, answer, new ArrayList<>());
+        return answer;
+    }
+
+    public static void sumOFSubsets(int i, int[] arr, List<Integer> list, int sum) {
+        if (i == arr.length) {
+            list.add(sum);
+            return;
+        }
+        sumOFSubsets(i + 1, arr, list, sum + arr[i]);
+        sumOFSubsets(i + 1, arr, list, sum);
+    }
+
+    public static List<Integer> solutionPrinter(int[] arr) {
+        List<Integer> solutionList = new ArrayList<>();
+        sumOFSubsets(0, arr, solutionList, 0);
+        Collections.sort(solutionList);
+        return solutionList;
+    }
+
+    public static void uniqueAllSubsets(int i, Set<List<Integer>> subsets, List<Integer> list, int[] array) {
+        if (i == array.length) {
+            System.out.println(list);
+            subsets.add(list);
+            return;
+        }
+        list.add(array[i]);
+        uniqueAllSubsets(i + 1, subsets, list, array);
+        list.remove(list.size() - 1);
+        uniqueAllSubsets(i + 1, subsets, list, array);
+    }
+
+    private static Set<List<Integer>> solutionPrinterUnique(int[] array) {
+        Set<List<Integer>> solutions = new HashSet<>();
+        List<Integer> list = new ArrayList<>();
+        uniqueAllSubsets(0, solutions, list, array);
+        return solutions;
+    }
+
+    public static void findSubsetsUnique(int index, int[] nums, List<Integer> list, List<List<Integer>> answerList) {
+        answerList.add(new ArrayList<>(list));
+        for (int i = index; i < nums.length; i++) {
+            if (i != index && (nums[i] == nums[i - 1])) continue;
+            list.add(nums[i]);
+            findSubsetsUnique(i+1,nums,list,answerList);
             list.remove(list.size()-1);
         }
     }
-    public static List<List<Integer>> allCombinations(int[]arr,int target){
-        List<List<Integer>> answer = new ArrayList<>();
-        findCombinations(0,arr,target,answer,new ArrayList<>());
-        return answer;
-    }
-    public static List<List<Integer>> allCombinationsUnique(int[]arr,int target){
-        List<List<Integer>> answer = new ArrayList<>();
-        Arrays.sort(arr);
-        findUniqeCombinationsOncePick(0,arr,target,answer,new ArrayList<>());
-        return answer;
+    public static List<List<Integer>> ansPrinter(int[]nums){
+        Arrays.sort(nums);
+        List<List<Integer>>answerList = new ArrayList<>();
+        findSubsetsUnique(0,nums,new ArrayList<>(),answerList);
+        return answerList;
     }
 }
