@@ -42,12 +42,26 @@ public class Main {
         Set<List<Integer>> setSolution = new HashSet<>();
         List<Integer> list3 = new ArrayList<>();
         uniqueAllSubsets(0, setSolution, list3, array2);
-        int[]nums = new int[]{1,2,2,2,3,3};
+        int[] nums = new int[]{1, 2, 2, 2, 3, 3};
         System.out.println("ans printer: ");
         System.out.println(ansPrinter(nums));
+        int[] nums3 = new int[]{1, 2, 3};
+        List<List<Integer>> answer2 = new ArrayList<>();
+        boolean[] elementChecker = new boolean[3];
+        List<Integer> storeData = new ArrayList<>();
 
+        allPossiblePermutations(elementChecker, nums3, storeData, answer2);
+        System.out.println("all Possible permutations: ");
+        System.out.println(answer2);
+        int[] nums4 = new int[]{1, 2, 3};
+        List<List<Integer>> answer3 = new ArrayList<>();
+        List<Integer> storeData2 = new ArrayList<>();
+        System.out.println("version2 ");
+        allPossiblePermutation2(nums4, 0, answer3);
+        System.out.println(answer3);
 
     }
+
 
     public static void count(int i, int n) {
         if (i > n)
@@ -291,14 +305,50 @@ public class Main {
         for (int i = index; i < nums.length; i++) {
             if (i != index && (nums[i] == nums[i - 1])) continue;
             list.add(nums[i]);
-            findSubsetsUnique(i+1,nums,list,answerList);
-            list.remove(list.size()-1);
+            findSubsetsUnique(i + 1, nums, list, answerList);
+            list.remove(list.size() - 1);
         }
     }
-    public static List<List<Integer>> ansPrinter(int[]nums){
+
+    public static List<List<Integer>> ansPrinter(int[] nums) {
         Arrays.sort(nums);
-        List<List<Integer>>answerList = new ArrayList<>();
-        findSubsetsUnique(0,nums,new ArrayList<>(),answerList);
+        List<List<Integer>> answerList = new ArrayList<>();
+        findSubsetsUnique(0, nums, new ArrayList<>(), answerList);
         return answerList;
     }
+
+    public static void allPossiblePermutations(boolean[] elementPresentChecker, int[] nums,
+                                               List<Integer> storeData, List<List<Integer>> answer) {
+        if (storeData.size() == nums.length) {
+            answer.add(new ArrayList<>(storeData));
+            return;
+        }
+        for (int i = 0; i < nums.length; i++) {
+            if (!elementPresentChecker[i]) {
+                elementPresentChecker[i] = true;
+                storeData.add(nums[i]);
+                allPossiblePermutations(elementPresentChecker, nums, storeData, answer);
+                storeData.remove(storeData.size() - 1);
+                elementPresentChecker[i] = false;
+            }
+        }
+    }
+
+    public static void allPossiblePermutation2(int[] nums, int index, List<List<Integer>> answer) {
+        if (index == nums.length) {
+            List<Integer> storeData = new ArrayList<>();
+            for (int i = 0; i < nums.length; i++) {
+                storeData.add(nums[i]);
+            }
+            answer.add(new ArrayList<>(storeData));
+            return;
+        }
+        for (int i = index; i < nums.length; i++) {
+            swap(i, index, nums);
+            allPossiblePermutation2(nums, index + 1, answer);
+            swap(i, index, nums);
+        }
+
+    }
+
 }
