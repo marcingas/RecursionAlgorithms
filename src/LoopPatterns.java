@@ -3,6 +3,7 @@ public class LoopPatterns {
 
 
         //pattern 1
+        System.out.println("1");
         for (int row = 0; row < 5; row++) {
             System.out.print("\n");
             for (int col = 0; col < 5; col++) {
@@ -11,6 +12,7 @@ public class LoopPatterns {
         }
 
         //pattern 2
+        System.out.println("2");
         for (int row = 0; row < 5; row++) {
             System.out.print("\n");
             for (int col = 0; col <= row; col++) {
@@ -18,7 +20,7 @@ public class LoopPatterns {
             }
         }
         //pattern3
-
+        System.out.println("3");
         for (int row = 0; row <= 5; row++) {
             System.out.print("\n");
             for (int col = 1; col <= row; col++) {
@@ -26,6 +28,7 @@ public class LoopPatterns {
             }
         }
         //pattern 4
+        System.out.println("4");
         for (int row = 0; row <= 5; row++) {
             System.out.print("\n");
             for (int col = 1; col <= row; col++) {
@@ -33,6 +36,7 @@ public class LoopPatterns {
             }
         }
         //pattern 5
+        System.out.println("5");
         int n = 4;
         for (int row = 0; row <= n; row++) {
             System.out.print("\n");
@@ -63,15 +67,45 @@ public class LoopPatterns {
             }
         }
         //pattern 8
-        for (int row = 0; row < d; row++) {
+        System.out.println("\n8 \n");
+
+        n = 5;
+        for (int row = 0; row < n; row++) {
             System.out.print("\n");
-            for (int col = 0; col < row; col++) {
+            //blank  0 5 0 9
+            //       1 5 2 7
+            //       2 5 4 5
+            //       3 5 6 3
+            for (int col = 0; col < n - row - 1; col++) {
                 System.out.print(" ");
             }
+            //star
             for (int col = 0; col < 2 * row + 1; col++) {
                 System.out.print("*");
             }
-            for (int col = 0; col < row; col++) {
+
+            //blank
+            for (int col = 0; col < n - row - 1; col++) {
+                System.out.print(" ");
+            }
+        }
+        for (int row = 0; row < n; row++) {
+            System.out.print("\n");
+
+            //blank  0 5
+            //       1 5
+            //       2 5
+            //       3 5
+            for (int col = 0; col < row +1; col++) {
+                System.out.print(" ");
+            }
+            //star 7,5,3,1,
+            for (int col = 0; col < 2*n - (2*row+3); col++) {
+                System.out.print("*");
+            }
+
+            //blank
+            for (int col = 0; col < row +1; col++) {
                 System.out.print(" ");
             }
         }
@@ -89,6 +123,7 @@ public class LoopPatterns {
             }
         }
         //pattern 10
+        System.out.println("10");
         for (int row = 0; row < d; row++) {
             System.out.print("\n");
             for (int col = 0; col < d - row - 1; col++) {
@@ -174,6 +209,33 @@ public class LoopPatterns {
             for (int col = 0; col <= row; col++) {
                 System.out.print(ch);
 
+            }
+        }
+        //pattern 17
+        for (int row = 0; row < n; row++) {
+            System.out.print("\n");
+            for (int col = 0; col < n; col++) {
+                if (row == 0 || col == 0 || row == n - 1 || col == n - 1) {
+                    System.out.print("*");
+                }else System.out.print(" ");
+
+
+            }
+        }
+        //pattern 18
+         n = 4;
+        num = 1;
+//2*n-1
+//        int [][]arr = new int[2*n-1][2*n-1];
+        for (int row = 0; row < 2*n-1; row++) {
+            System.out.print("\n");
+            for (int col = 0; col < 2*n-1; col++) {
+                int top = row;
+                int left = col;
+                int right = (2*n - 2) - col;
+                int down = (2*n- 2) - row;
+//                arr[row][col] =(n - Math.min(Math.min(top, down), Math.min(right, left)));
+                System.out.print(n - Math.min(Math.min(top, down), Math.min(right, left)));
             }
         }
     }
