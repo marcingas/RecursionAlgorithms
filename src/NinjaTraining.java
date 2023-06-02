@@ -43,28 +43,31 @@ public class NinjaTraining {
 
     public static int trainingPointsCounterTabulation(int days, int[][] points) {
         //in day 0 you have 4 solutions to check:
-        int answers[][] = new int[days][4];
-        answers[0][0] = Math.max(points[0][1], points[0][2]);
-        answers[0][1] = Math.max(points[0][0], points[0][2]);
-        answers[0][2] = Math.max(points[0][1], points[0][0]);
-        answers[0][3] = Math.max(points[0][0], Math.max(points[0][2], points[0][1]));
+        int previous[] = new int[4];
+        previous[0] = Math.max(points[0][1], points[0][2]);
+        previous[1] = Math.max(points[0][0], points[0][2]);
+        previous[2] = Math.max(points[0][1], points[0][0]);
+        previous[3] = Math.max(points[0][0], Math.max(points[0][2], points[0][1]));
         //from day 1 :
         for (int dayIndex = 1; dayIndex < days; dayIndex++) {
+            int[] temp = new int[4];
             for (int lastTask = 0; lastTask < 4; lastTask++) {
-                answers[dayIndex][lastTask] = 0;
+                temp[lastTask] = 0;
 
                 for (int task = 0; task <= 2; task++) {
                     if (task != lastTask) {
-                        int point = points[dayIndex][task] + answers[dayIndex - 1][task];
-                        answers[dayIndex][lastTask] = Math.max(answers[dayIndex][lastTask], point);
+
+                        temp[lastTask] = Math.max(temp[lastTask],
+                                points[dayIndex][task] + previous[task]);
                     }
                 }
 
             }
+            previous=temp;
 
         }
 
-        return answers[days - 1][3];
+        return previous[3];
     }
 
 }
