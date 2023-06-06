@@ -17,15 +17,20 @@ public class TrianglePath {
 
     public static int findTrianglePath(int[][] arr) {
         int[][] dp = new int[arr.length][arr.length];
+        int[]previous = new int[arr.length];
+
         for (int j = 0; j < arr.length; j++) {
-            dp[arr.length - 1][j] = arr[arr.length - 1][j];
+//            dp[arr.length - 1][j] = arr[arr.length - 1][j];
+            previous[j] = arr[arr.length-1][j];
         }
         for (int i = arr.length - 2; i >= 0; i--){
+            int []temp = new int[arr.length];
             for (int j = i; j>=0; j--){
-                int down = arr[i][j] + dp[i+1][j];
-        int diagonal = arr[i][j] + dp[i+1][j+1];
-        dp[i][j]=Math.min(diagonal,down);
+                int down = arr[i][j] + previous[j];
+        int diagonal = arr[i][j] + previous[j+1];
+        temp[j]=Math.min(diagonal,down);
             }
+            previous = temp;
         }
 
 
@@ -38,6 +43,6 @@ public class TrianglePath {
 //        int diagonal = arr[i][j] + findTrianglePath(i + 1, j + 1, arr);
 
 
-            return dp[0][0];
+            return previous[0];
     }
 }
