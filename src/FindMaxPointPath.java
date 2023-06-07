@@ -10,34 +10,36 @@ public class FindMaxPointPath {
     public static int maxPointPath(int[][] arr) {
         int n = arr.length;
         int m = arr[0].length;
-        int[][] dp = new int[n][m];
+        int[] prev = new int[m];
         for (int j = 0; j < m; j++) {
-            dp[0][j] = arr[0][j];
+            prev[j] = arr[0][j];
         }
         for (int i = 1; i < n; i++) {
+            int[]temp= new int[m];
             for (int j = 0; j < m; j++) {
 
                 int leftDiagonal = arr[i][j];
-                if (j - 1 >= 0) leftDiagonal += dp[i - 1][j - 1];
+                if (j - 1 >= 0) leftDiagonal += prev[j - 1];
                 else leftDiagonal += (int) Math.pow(-10, 9);
-                int up = arr[i][j] + dp[i - 1][j];
+                int up = arr[i][j] + prev[j];
 
                 int rightDiagonal = arr[i][j];
-                if (j + 1 < m) rightDiagonal += dp[i - 1][j + 1];
+                if (j + 1 < m) rightDiagonal += prev[j + 1];
                 else rightDiagonal += (int) Math.pow(-10, 9);
-                dp[i][j] = Math.max(up, Math.max(leftDiagonal, rightDiagonal));
+                temp[j] = Math.max(up, Math.max(leftDiagonal, rightDiagonal));
             }
+            prev = temp;
         }
 
 //        if (j > arr[0].length - 1 || j < 0) return (int) Math.pow(-2, 6);
-//        if (dp[i][j] != -1) return dp[i][j];
-//        int leftDiagonal = arr[i][j] + maxPointPath(i - 1, j - 1, arr, dp);
-//        int up = arr[i][j] + maxPointPath(i - 1, j, arr, dp);
-//        int rightDiagonal = arr[i][j] + maxPointPath(i - 1, j + 1, arr, dp);
+//        if (prev[i][j] != -1) return prev[i][j];
+//        int leftDiagonal = arr[i][j] + maxPointPath(i - 1, j - 1, arr, prev);
+//        int up = arr[i][j] + maxPointPath(i - 1, j, arr, prev);
+//        int rightDiagonal = arr[i][j] + maxPointPath(i - 1, j + 1, arr, prev);
 
         int max = Integer.MIN_VALUE;
         for(int j =0; j< m; j++){
-            max = Math.max(dp[n-1][j], max);
+            max = Math.max(prev[j], max);
         }
 return max;
     }
