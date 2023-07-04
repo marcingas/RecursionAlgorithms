@@ -2,6 +2,7 @@ package sortingmethods;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class MergeSort {
     public static void main(String[] args) {
@@ -15,33 +16,34 @@ public class MergeSort {
         int mid = (low + high) / 2;
         mergeSortMethod(arr, low, mid);
         mergeSortMethod(arr, mid + 1, high);
-        merge(arr, low, high, mid);
+        merge(arr,low,high,mid);
+
+
     }
 
     public static void merge(int[] arr, int low, int high, int mid) {
-        ArrayList<Integer> tempList = new ArrayList<>();
+        List<Integer> temp = new ArrayList<>();
         int left = low;
         int right = mid + 1;
         while (left <= mid && right <= high) {
             if (arr[left] <= arr[right]) {
-                tempList.add(arr[left]);
+                temp.add(arr[left]);
                 left++;
             } else {
-                tempList.add(arr[right]);
+                temp.add(arr[right]);
                 right++;
             }
         }
         while (left <= mid) {
-            tempList.add(arr[left]);
+            temp.add(arr[left]);
             left++;
         }
         while (right <= high) {
-            tempList.add(arr[right]);
+            temp.add(arr[right]);
             right++;
         }
-
         for (int i = low; i <= high; i++) {
-            arr[i] = tempList.get(i - low);
+            arr[i] = temp.get(i - low);
         }
     }
 }
