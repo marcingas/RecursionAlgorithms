@@ -6,6 +6,7 @@ public class SelectionSort {
     //TC = O((N*(N+1))/2); N*N, SC = O(1);
     public static void main(String[] args) {
         int[]arr={5,6,4,3,2,1};
+
         System.out.println(Arrays.toString(selection_sort(arr)));
     }
 
