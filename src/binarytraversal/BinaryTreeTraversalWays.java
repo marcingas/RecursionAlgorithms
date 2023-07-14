@@ -1,3 +1,5 @@
+package binarytraversal;
+
 import javax.swing.tree.TreeNode;
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -15,12 +17,12 @@ public class BinaryTreeTraversalWays {
         root.right.left = new Node(6);
         root.right.right = new Node(7);
 
-        List<Integer>list = new LinkedList<>();
-//        inOrder(root,list);
-//        preOrder(root,list);
-//        postOrder(root,list);
+        List<Integer> list = new LinkedList<>();
+        //      inOrder(root,list);
+        //     preOrder(root,list);
+//       postOrder(root,list);
         levelOrder(root);
-        for(var el: list){
+        for (var el : list) {
             System.out.println(el);
         }
 
