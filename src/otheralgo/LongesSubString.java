@@ -9,9 +9,9 @@ public class LongesSubString {
     public static void main(String[] args) {
         //given String, find the longest substring without repeating char.
         String string = "abcdaabbabcde";
-        System.out.println(findTheLongestBrute(string));
-        System.out.println(findTheLongest(string));
-        System.out.println(findTheLongestOptimal(string));
+        System.out.println(findTheLongestBrute(string));//TC= O(N^2)
+        System.out.println(findTheLongest(string));//TC=O(N)
+        System.out.println(findTheLongestOptimal(string));//TC=O(N), faster
 
     }
 
