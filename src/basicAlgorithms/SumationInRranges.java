@@ -8,7 +8,7 @@ public class SumationInRranges {
 
     }
 
-    private static int sumInRanges(int left, int right, int[] data) {
+    public static int sumInRanges(int left, int right, int[] data) {
         int[] sum = new int[data.length + 1];
         int s = 0;
         for (int i = 0; i < data.length; i++) {
