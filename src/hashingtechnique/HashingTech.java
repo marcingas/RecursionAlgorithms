@@ -28,13 +28,13 @@ public class HashingTech {
         int maxRepeat = Integer.MIN_VALUE;
         int index = -1;
         for (int i = 1; i < hashArr.length; i++) {
-            if(hashArr[i]>maxRepeat){
+            if (hashArr[i] > maxRepeat) {
                 maxRepeat = hashArr[i];
                 index = i;
             }
         }
         System.out.println(maxRepeat);
-        if(index!=-1){
+        if (index != -1) {
             System.out.println(index);
         }
     }
@@ -48,7 +48,7 @@ public class HashingTech {
     }
 
     private static void charHashing(char[] arr) {
-        //corresponfing value = given char - 'a';
+        //corresponding value = given char - 'a';
         //lower case ->26 size
         //lower and upper -> 256 size
         int[] hash = new int[26];

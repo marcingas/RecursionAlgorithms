@@ -1,7 +1,5 @@
 package binarytraversal;
 
-import javax.swing.tree.TreeNode;
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
@@ -21,12 +19,10 @@ public class BinaryTreeTraversalWays {
         //      inOrder(root,list);
         //     preOrder(root,list);
 //       postOrder(root,list);
-        levelOrder(root);
+        System.out.println(levelOrder(root));
         for (var el : list) {
             System.out.println(el);
         }
-
-
     }
 
     private static void inOrder(Node current, List<Integer> list) {
@@ -60,8 +56,9 @@ public class BinaryTreeTraversalWays {
         queue.offer(root);
         while (!queue.isEmpty()) {
             List<Integer> subList = new LinkedList<>();
-            for (int i = 0; i < queue.size(); i++) {
-                Node currentNode = queue.peek();
+            Integer initialSize = queue.size();
+            for (int i = 0; i < initialSize; i++) {
+                Node currentNode = queue.poll();
                 if (currentNode.left != null) queue.offer(currentNode.left);
                 if (currentNode.right != null) queue.offer(currentNode.right);
 
